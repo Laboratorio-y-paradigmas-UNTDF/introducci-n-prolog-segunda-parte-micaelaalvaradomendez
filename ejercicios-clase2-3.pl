@@ -58,7 +58,7 @@ vuelo(bue, bog, 380).
 % ============================================================
 
 % COMPLETAR: iguales(X, Y) :- ???
-iguales(_, _) :- fail.
+iguales(X, Y) :- X = Y.
 
 
 % ============================================================
@@ -72,7 +72,7 @@ iguales(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: son_identicos(X, Y) :- ???
-son_identicos(_, _) :- fail.
+son_identicos(X, Y) :- X == Y.
 
 
 % ============================================================
@@ -85,7 +85,7 @@ son_identicos(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: descomponer(T, L) :- ???
-descomponer(_, _) :- fail.
+descomponer(T, L) :- T=..L.
 
 
 % ============================================================
@@ -100,7 +100,7 @@ descomponer(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: comparten_destino(X, Y) :- ???
-comparten_destino(_, _) :- fail.
+comparten_destino(X, Y) :- viaja(X, Z), viaja(Y, Z), \+ X = Y.
 
 
 % ============================================================
@@ -118,7 +118,7 @@ comparten_destino(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: todos_los_viajeros(D, L) :- ???
-todos_los_viajeros(_, []) :- fail.
+todos_los_viajeros(D, L) :- findall(P, viaja(P, D), L).
 
 
 % ============================================================
@@ -132,7 +132,7 @@ todos_los_viajeros(_, []) :- fail.
 % ============================================================
 
 % COMPLETAR: destinos_unicos(L) :- ???
-destinos_unicos([]) :- fail.
+destinos_unicos(L) :- setof(D, P^viaja(P, D), L).
 
 
 % ============================================================
@@ -145,7 +145,7 @@ destinos_unicos([]) :- fail.
 % ============================================================
 
 % COMPLETAR: cuadrado(N, C) :- ???
-cuadrado(_, _) :- fail.
+cuadrado(N, C) :- C is N * N.
 
 
 % ============================================================
@@ -160,7 +160,8 @@ cuadrado(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR (dos cláusulas): factorial/2
-factorial(_, _) :- fail.
+factorial(0, 1). 
+factorial(N, F) :- N > 0, N1 is N - 1, factorial(N1, F1), F is N * F1.
 
 
 % ============================================================
@@ -174,7 +175,8 @@ factorial(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: maximo/3
-maximo(_, _, _) :- fail.
+maximo(X, Y, X) :- X >= Y, !.
+maximo(_, Y, Y).
 
 
 % ============================================================
@@ -188,7 +190,8 @@ maximo(_, _, _) :- fail.
 % ============================================================
 
 % COMPLETAR: valor_absoluto/2
-valor_absoluto(_, _) :- fail.
+valor_absoluto(X, X) :- X >= 0, !.
+valor_absoluto(X, A) :- A is -X.
 
 
 % ============================================================
@@ -207,7 +210,10 @@ valor_absoluto(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: clasificar_edad/2
-clasificar_edad(_, _) :- fail.
+clasificar_edad(Edad, Categoria) :- 
+    (Edad < 18 -> Categoria = menor;
+     Edad < 65 -> Categoria = adulto;
+     Categoria = mayor).
 
 
 % ============================================================
@@ -222,7 +228,7 @@ clasificar_edad(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: no_viaja/2
-no_viaja(_, _) :- fail.
+no_viaja(Persona, Destino) :- persona(Persona, _), \+ viaja(Persona, Destino).
 
 
 % ============================================================
@@ -236,7 +242,8 @@ no_viaja(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR (dos cláusulas): pertenece/2
-pertenece(_, _) :- fail.
+pertenece(X, [X|_]).
+pertenece(X, [_|T]) :- pertenece(X, T).
 
 
 % ============================================================
@@ -249,7 +256,8 @@ pertenece(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR (dos cláusulas): concatenar/3
-concatenar(_, _, _) :- fail.
+concatenar([], L, L).
+concatenar([H|T], L2, [H|L3]) :- concatenar(T, L2, L3).
 
 
 % ============================================================
