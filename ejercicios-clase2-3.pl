@@ -270,7 +270,8 @@ concatenar([H|T], L2, [H|L3]) :- concatenar(T, L2, L3).
 % ============================================================
 
 % COMPLETAR (dos cláusulas): longitud/2
-longitud(_, _) :- fail.
+longitud([], 0).
+longitud([_|T], N) :- longitud(T, N1), N is N1 + 1.
 
 
 % ============================================================
@@ -284,7 +285,8 @@ longitud(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR (dos cláusulas): ultimo/2
-ultimo(_, _) :- fail.
+ultimo([X], X).
+ultimo([_|T], U) :- ultimo(T, U).
 
 
 % ============================================================
@@ -302,7 +304,10 @@ ultimo(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: reversa/2 y reversa_aux/3
-reversa(_, _) :- fail.
+reversa(L, R) :- reversa_aux(L, [], R).
+
+reversa_aux([], Acc, Acc).
+reversa_aux([H|T], Acc, R) :- reversa_aux(T, [H|Acc], R).
 
 
 % ============================================================
@@ -316,7 +321,10 @@ reversa(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: suma_lista/2 y suma_lista_aux/3
-suma_lista(_, _) :- fail.
+suma_lista(L, S) :- suma_lista_aux(L, 0, S).
+
+suma_lista_aux([], Acc, Acc).
+suma_lista_aux([H|T], Acc, S) :- Acc1 is Acc + H, suma_lista_aux(T, Acc1, S).
 
 
 % ============================================================
@@ -330,7 +338,10 @@ suma_lista(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: maximo_lista/2
-maximo_lista(_, _) :- fail.
+maximo_lista([X], X).
+maximo_lista([H|T], M) :- 
+    maximo_lista(T, M1), 
+    (H >= M1 -> M = H ; M = M1).
 
 
 % ============================================================
@@ -344,7 +355,13 @@ maximo_lista(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR (dos cláusulas dependiendo de si H==X): contar/3
-contar(_, _, _) :- fail.
+contar(_, [], 0).
+contar(X, [H|T], N) :- 
+    X == H, !, 
+    contar(X, T, N1), 
+    N is N1 + 1.
+contar(X, [_|T], N) :- 
+    contar(X, T, N).
 
 
 % ============================================================
@@ -358,7 +375,7 @@ contar(_, _, _) :- fail.
 % ============================================================
 
 % COMPLETAR: pares/2
-pares(_, []) :- fail.
+pares(L, P) :- findall(X, (member(X, L), 0 is X mod 2), P).
 
 
 % ============================================================
@@ -371,7 +388,11 @@ pares(_, []) :- fail.
 % ============================================================
 
 % COMPLETAR: promedio_edades/1
-promedio_edades(_) :- fail.
+promedio_edades(P) :- 
+    findall(E, persona(_, E), Edades),
+    sum_list(Edades, Sum),
+    length(Edades, N),
+    P is Sum / N.
 
 
 % ============================================================
@@ -387,8 +408,8 @@ promedio_edades(_) :- fail.
 % ============================================================
 
 % COMPLETAR: vuelo_directo_o_escala/2
-vuelo_directo_o_escala(_, _) :- fail.
-
+vuelo_directo_o_escala(A, B) :- vuelo(A, B, _).
+vuelo_directo_o_escala(A, B) :- vuelo(A, C, _), vuelo(C, B, _).
 
 % ============================================================
 %  EJERCICIO 24 — Grafo recursivo: ruta/3
@@ -405,7 +426,8 @@ vuelo_directo_o_escala(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR (dos cláusulas): ruta/3
-ruta(_, _, _) :- fail.
+ruta(A, B, [A, B]) :- vuelo(A, B, _).
+ruta(A, B, [A|R]) :- vuelo(A, C, _), ruta(C, B, R).
 
 
 % ============================================================
