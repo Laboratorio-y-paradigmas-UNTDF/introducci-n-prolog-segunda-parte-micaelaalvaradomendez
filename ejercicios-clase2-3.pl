@@ -451,7 +451,13 @@ color_disponible(verde).
 color_disponible(azul).
 
 % COMPLETAR: colorear_triangulo/3
-colorear_triangulo(_, _, _) :- fail.
+colorear_triangulo(A, B, C) :-
+    color_disponible(A),
+    color_disponible(B),
+    A \= B,
+    color_disponible(C),
+    C \= A,
+    C \= B.
 
 
 % ============================================================
@@ -465,7 +471,7 @@ colorear_triangulo(_, _, _) :- fail.
 % ============================================================
 
 % COMPLETAR: mayores_de/2
-mayores_de(_, _) :- fail.
+mayores_de(Edad, L) :- setof(Persona, E^(persona(Persona, E), E > Edad), L).
 
 
 % ============================================================
@@ -480,7 +486,12 @@ mayores_de(_, _) :- fail.
 % ============================================================
 
 % COMPLETAR: estadisticas_lista/4
-estadisticas_lista(_, _, _, _) :- fail.
+estadisticas_lista(L, Min, Max, Prom) :-
+    min_list(L, Min),
+    max_list(L, Max),
+    sum_list(L, Sum),
+    length(L, N),
+    Prom is Sum / N.
 
 
 % ============================================================
@@ -517,7 +528,7 @@ no_ataca(C, [C2|Cs], Dist) :-
 
 % COMPLETAR: cuatro_reinas/1
 % Pista: permutation([1,2,3,4], Sol), no_ataca_diagonales(Sol).
-cuatro_reinas(_) :- fail.
+cuatro_reinas(Sol) :- permutation([1,2,3,4], Sol), no_ataca_diagonales(Sol).
 
 
 % ============================================================
